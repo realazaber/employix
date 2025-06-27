@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Application", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Infrastructure", "src\Employix.Infrastructure\Employix.Infrastructure.csproj", "{AB074341-9356-4780-97BB-2DEE75F78527}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DF86E67E-C3C4-4AF9-A0FA-9FA3171F73D6}"
+	ProjectSection(SolutionItems) = preProject
+		CreateMigration.sh = CreateMigration.sh
+		UpdateDatabase.sh = UpdateDatabase.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
