@@ -1,0 +1,11 @@
+﻿<Project>
+  <PropertyGroup>
+    <StartupProjectFullPath>..\Employix.Presentation\Employix.Presentation</StartupProjectFullPath>
+  </PropertyGroup>
+
+  <Target Name="SetEfStartupProject" BeforeTargets="PrepareProjectForBuild">
+    <PropertyGroup>
+      <EFStartupProject Condition="'$(EFStartupProject)' == ''">$(StartupProjectFullPath)</EFStartupProject>
+    </PropertyGroup>
+  </Target>
+</Project>
