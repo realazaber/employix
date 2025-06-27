@@ -1,9 +1,8 @@
 using Employix.Presentation.Components;
-using Employix.Application;
 using Employix.Infrastructure;
 using Employix.Presentation.Extensions;
 using Employix.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Employix.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
