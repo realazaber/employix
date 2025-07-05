@@ -3,6 +3,7 @@ using Employix.Infrastructure;
 using Employix.Presentation.Extensions;
 using Employix.Infrastructure.Data;
 using Employix.Application.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ using (var scope = app.Services.CreateScope())
 {
     // Ensure the database is created and migrations are applied.
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // dbContext.Database.Migrate();
+    dbContext.Database.Migrate();
 }
 
 
