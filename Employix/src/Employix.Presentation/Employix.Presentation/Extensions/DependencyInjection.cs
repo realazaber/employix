@@ -1,5 +1,7 @@
-﻿using Employix.Domain.Models.Entities;
+﻿using Employix.Domain.Models;
+using Employix.Domain.Models.Entities;
 using Employix.Infrastructure.Data;
+using Employix.Infrastructure.Services;
 using Employix.Presentation.Components.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +18,17 @@ namespace Employix.Presentation.Extensions
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
 
-            services.AddSingleton<IEmailSender<User>, IdentityNoOpEmailSender>();
+            services.Configure<EmailSettings>(options =>
+            {
+                options.Sender = Environment.GetEnvironmentVariable("SMTP_EMAIL_ADDRESS");
+                options.Password = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+                options.Provider = Environment.GetEnvironmentVariable("SMTP_CLIENT_PROVIDER");
+                options.MyEmail = Environment.GetEnvironmentVariable("SMTP_MY_EMAIL");
+                options.Port = int.TryParse(Environment.GetEnvironmentVariable("SMTP_PORT"), out var port) ? port : 25;
+            });
+
+
+            services.AddSingleton<IEmailSender<User>, MailSender>();
             services.AddCascadingAuthenticationState();
             services.AddScoped<IdentityUserAccessor>();
             services.AddScoped<IdentityRedirectManager>();
