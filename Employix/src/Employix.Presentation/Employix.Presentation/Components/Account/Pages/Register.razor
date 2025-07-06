@@ -35,12 +35,12 @@
                 <ValidationMessage For="() => Input.Email" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="First Name" />
                 <label for="firstname">First Name</label>
                 <ValidationMessage For="() => Input.FirstName" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Last Name" />
                 <label for="lastname">Last Name</label>
                 <ValidationMessage For="() => Input.LastName" class="text-danger" />
             </div>
