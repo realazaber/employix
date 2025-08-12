@@ -8,8 +8,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Presentation", "src\Employix.Presentation\Employix.Presentation\Employix.Presentation.csproj", "{B29E5602-2A09-46E8-9B2A-114526350BC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Presentation.Client", "src\Employix.Presentation\Employix.Presentation.Client\Employix.Presentation.Client.csproj", "{A591A60E-AEF9-46E0-B1BB-4F8896B1EA06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622} = {A91C9940-2408-4F1D-8FD9-150BF59E7622}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Domain", "src\Employix.Domain\Employix.Domain.csproj", "{7745450D-E00D-4E60-AB6C-3B80685368E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622} = {A91C9940-2408-4F1D-8FD9-150BF59E7622}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Application", "src\Employix.Application\Employix.Application.csproj", "{45444C95-210B-4E1C-B1F7-34DF2EC5602C}"
 EndProject
@@ -18,7 +24,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DF86E67E-C3C4-4AF9-A0FA-9FA3171F73D6}"
 	ProjectSection(SolutionItems) = preProject
 		CreateMigration.sh = CreateMigration.sh
+		ResetDb.sh = ResetDb.sh
 		UpdateDatabase.sh = UpdateDatabase.sh
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employix.Shared", "src\Employix.Shared\Employix.Shared.csproj", "{A91C9940-2408-4F1D-8FD9-150BF59E7622}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{7DEB46DD-AB37-4ED4-AC6E-A0F76E26745F}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Global
@@ -47,6 +61,10 @@ Global
 		{AB074341-9356-4780-97BB-2DEE75F78527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB074341-9356-4780-97BB-2DEE75F78527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB074341-9356-4780-97BB-2DEE75F78527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +75,7 @@ Global
 		{7745450D-E00D-4E60-AB6C-3B80685368E8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{45444C95-210B-4E1C-B1F7-34DF2EC5602C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{AB074341-9356-4780-97BB-2DEE75F78527} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A91C9940-2408-4F1D-8FD9-150BF59E7622} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9ABC426E-A85D-45B6-A79F-FD749FEA5789}
