@@ -30,5 +30,13 @@ RUN dotnet publish "./Employix.Presentation.csproj" -c $BUILD_CONFIGURATION -o /
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+
+RUN mkdir -p /app/keys && chmod -R 777 /app/keys
+
+VOLUME ["/app/keys"]
+
 COPY --from=publish /app/publish .
+
+USER $APP_UID
+
 ENTRYPOINT ["dotnet", "Employix.Presentation.dll"]
