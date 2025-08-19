@@ -1,25 +1,17 @@
 using Employix.Presentation.Components;
 using Employix.Infrastructure;
 using Employix.Presentation.Extensions;
-using Employix.Infrastructure.Data;
 using Employix.Application.Extensions;
-using Microsoft.EntityFrameworkCore;
+using Employix.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
                 .AddApplication()
-                .AddInfrastructure(builder.Configuration)
+                .AddInfrastructure()
                 .AddPresentation();
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    // Ensure the database is created and migrations are applied.
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
-}
 
 
 // Configure the HTTP request pipeline.
@@ -44,9 +36,12 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Employix.Presentation.Client._Imports).Assembly);
 
-// Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
-app.Run();
+await app.AddMigrations();
+await app.AddSeeders();
+
+await app.RunAsync();
+
 
 
