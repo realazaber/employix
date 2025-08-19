@@ -1,7 +1,35 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@code {
+    private bool _hasRedirected = false;
 
-Welcome to your new app.
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_hasRedirected)
+            return;
+
+        _hasRedirected = true;
+
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            NavigationManager.NavigateTo("/dashboard", forceLoad: true);
+        }
+        else
+        {
+            NavigationManager.NavigateTo($"/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}", forceLoad: true);
+        }
+    }
+
+    
+}
