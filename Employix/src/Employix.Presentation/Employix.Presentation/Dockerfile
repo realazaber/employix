@@ -2,10 +2,25 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+
+RUN mkdir -p /app/keys && chmod -R 777 /app/keys
+
+EXPOSE 8086
+EXPOSE 8085
+
+
+ENV ServicePort="8086"
+
+
+ENV DB_CONNECTION=
+ENV SMTP_EMAIL_ADDRESS=
+ENV SMTP_PASSWORD=
+ENV SMTP_CLIENT_PROVIDER=
+ENV SMTP_MY_EMAIL=
+ENV SMTP_PORT=
+ENV DEMO_MODE="true"
 
 
 # This stage is used to build the service project
