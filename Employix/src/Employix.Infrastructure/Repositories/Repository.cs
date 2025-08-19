@@ -22,6 +22,12 @@ namespace Employix.Infrastructure.Repositories
             return entity;
         }
 
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbContext.Set<T>().AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public virtual async Task DeleteAsync(string Id)
         {
             await _dbContext.Set<T>().Where(e => e.Id.ToString() == Id).ExecuteDeleteAsync();

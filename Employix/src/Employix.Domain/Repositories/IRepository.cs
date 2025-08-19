@@ -11,6 +11,8 @@ namespace Employix.Domain.Repositories
 
         Task<TEntity> AddAsync(TEntity entity);
 
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
+
         Task<TEntity> UpdateAsync(TEntity entity);
 
         Task DeleteAsync(String Id);
