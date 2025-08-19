@@ -1,5 +1,6 @@
 ﻿using Employix.Domain.Models.Entities;
 using Employix.Infrastructure.Repositories;
+using Employix.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Employix.Infrastructure.Seeders.Demo
@@ -9,7 +10,8 @@ namespace Employix.Infrastructure.Seeders.Demo
         public static async Task AddIT(GroupsRepository _groupRepository,
                                        TeamsRepository _teamRepository,
                                        DepartmentsRepository _departmentRepository,
-                                       UserManager<User> _userManager)
+                                       UserManager<User> _userManager,
+                                       RegionsRepository _regionsRepository)
         {
             User itAdmin = new User
             {
@@ -21,7 +23,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(itAdmin, "Steve1235*");
-            await _userManager.AddToRoleAsync(itAdmin, "TeamManager");
+            await _userManager.AddToRoleAsync(itAdmin, Roles.TeamManager);
 
             User itObiwan = new User
             {
@@ -33,7 +35,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(itObiwan, "ObiWan1235*");
-            await _userManager.AddToRoleAsync(itObiwan, "TeamMember");
+            await _userManager.AddToRoleAsync(itObiwan, Roles.TeamMember);
 
             User itRobinWill = new User
             {
@@ -45,7 +47,9 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(itRobinWill, "RobWill1235*");
-            await _userManager.AddToRoleAsync(itRobinWill, "TeamMember");
+            await _userManager.AddToRoleAsync(itRobinWill, Roles.TeamMember);
+
+            Region ausRegion = await _regionsRepository.GetByNameAsync("Australia");
 
 
             Group itGroup = await _groupRepository.AddAsync(new Group
@@ -53,6 +57,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 Name = "IT Group",
                 Description = "A group for all IT related activities.",
                 CreatedAt = DateTime.UtcNow,
+                Region = ausRegion,
             });
             itGroup.Members.Add(itAdmin);
             itGroup.Members.Add(itObiwan);
@@ -65,14 +70,17 @@ namespace Employix.Infrastructure.Seeders.Demo
                 Description = "Handles all IT activities.",
                 CreatedAt = DateTime.UtcNow,
                 Group = itGroup,
+                Region = ausRegion,
             };
             itTeam.Leaders.Add(itAdmin);
             await _teamRepository.AddAsync(itTeam);
+
 
             Department itDepartment = new Department
             {
                 Name = "IT",
                 Description = "Responsible for managing the company's IT infrastructure.",
+                Region = ausRegion,
                 CreatedAt = DateTime.UtcNow,
                 Leaders = new List<User> { itAdmin },
             };

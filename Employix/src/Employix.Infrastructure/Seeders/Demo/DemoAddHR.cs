@@ -1,5 +1,6 @@
 ﻿using Employix.Domain.Models.Entities;
 using Employix.Infrastructure.Repositories;
+using Employix.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Employix.Infrastructure.Seeders.Demo
@@ -10,7 +11,8 @@ namespace Employix.Infrastructure.Seeders.Demo
             GroupsRepository _groupRepository,
             TeamsRepository _teamRepository,
             DepartmentsRepository _departmentRepository,
-            UserManager<User> _userManager)
+            UserManager<User> _userManager,
+            RegionsRepository _regionsRepository)
         {
 
             User hrLeader = new User
@@ -23,7 +25,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(hrLeader, "Umbridge1235*");
-            await _userManager.AddToRoleAsync(hrLeader, "TeamManager");
+            await _userManager.AddToRoleAsync(hrLeader, Roles.TeamManager);
 
             User hrFilch = new User
             {
@@ -36,7 +38,7 @@ namespace Employix.Infrastructure.Seeders.Demo
             };
 
             await _userManager.CreateAsync(hrFilch, "Filch1235*");
-            await _userManager.AddToRoleAsync(hrFilch, "TeamMember");
+            await _userManager.AddToRoleAsync(hrFilch, Roles.TeamMember);
 
             User hrCatelynStark = new User
             {
@@ -49,13 +51,16 @@ namespace Employix.Infrastructure.Seeders.Demo
             };
 
             await _userManager.CreateAsync(hrCatelynStark, "Stark1235*");
-            await _userManager.AddToRoleAsync(hrCatelynStark, "TeamMember");
+            await _userManager.AddToRoleAsync(hrCatelynStark, Roles.TeamMember);
+
+            Region ukRegion = await _regionsRepository.GetByNameAsync("United Kingdom");
 
             Group hrGroup = new Group
             {
                 Name = "HR Group",
                 Description = "A group for all HR related activities.",
                 CreatedAt = DateTime.UtcNow,
+                Region = ukRegion,
             };
 
             hrGroup.Members.Add(hrLeader);
@@ -70,6 +75,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 Description = "Handles all HR activities.",
                 CreatedAt = DateTime.UtcNow,
                 Group = hrGroup,
+                Region = ukRegion,
             };
 
             hrTeam.Leaders.Add(hrLeader);
@@ -78,6 +84,7 @@ namespace Employix.Infrastructure.Seeders.Demo
             {
                 Name = "Human Resources",
                 Description = "Responsible for managing employee relations, recruitment, and organizational development.",
+                Region = ukRegion,
                 CreatedAt = DateTime.UtcNow,
                 Leaders = { hrLeader },
             };

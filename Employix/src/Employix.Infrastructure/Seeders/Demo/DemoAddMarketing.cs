@@ -1,5 +1,6 @@
 ﻿using Employix.Domain.Models.Entities;
 using Employix.Infrastructure.Repositories;
+using Employix.Shared.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Employix.Infrastructure.Seeders.Demo
@@ -9,7 +10,8 @@ namespace Employix.Infrastructure.Seeders.Demo
         public static async Task AddMarketing(Repository<Group> _groupRepository,
                                               TeamsRepository _teamRepository,
                                               DepartmentsRepository _departmentRepository,
-                                              UserManager<User> _userManager)
+                                              UserManager<User> _userManager,
+                                              RegionsRepository _regionRepository)
         {
             User marketingDepartmentLead = new User
             {
@@ -21,7 +23,7 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(marketingDepartmentLead, "Pugsley123*");
-            await _userManager.AddToRoleAsync(marketingDepartmentLead, "TeamManager");
+            await _userManager.AddToRoleAsync(marketingDepartmentLead, Roles.TeamManager);
 
 
             User marketingRobbStark = new User
@@ -34,13 +36,17 @@ namespace Employix.Infrastructure.Seeders.Demo
                 EmailConfirmed = true
             };
             await _userManager.CreateAsync(marketingRobbStark, "Robb1235*");
-            await _userManager.AddToRoleAsync(marketingRobbStark, "TeamMember");
+            await _userManager.AddToRoleAsync(marketingRobbStark, Roles.TeamMember);
+
+            Region globalRegion = await _regionRepository.GetByNameAsync("Global");
+
 
             Group marketingGroup = new Group
             {
                 Name = "Marketing Group",
                 Description = "A group for all marketing related activities.",
                 CreatedAt = DateTime.UtcNow,
+                Region = globalRegion,
             };
 
             marketingGroup.Members.Add(marketingRobbStark);
@@ -54,19 +60,22 @@ namespace Employix.Infrastructure.Seeders.Demo
                 Description = "Handles all marketing activities.",
                 CreatedAt = DateTime.UtcNow,
                 Group = marketingGroup,
+                Region = globalRegion,
 
             };
             marketingTeam.Leaders.Add(marketingDepartmentLead);
 
             await _teamRepository.AddAsync(marketingTeam);
 
+
+
             Department marketingDepartment = new Department
             {
                 Name = "Marketing",
                 Description = "Responsible for promoting the company's products and services.",
+                Region = globalRegion,
                 CreatedAt = DateTime.UtcNow,
                 Leaders = new List<User> { marketingDepartmentLead }
-
             };
 
             marketingDepartment.Teams.Add(marketingTeam);
