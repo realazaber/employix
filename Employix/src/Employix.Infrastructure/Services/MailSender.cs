@@ -1,5 +1,5 @@
 ﻿using Employix.Domain.Models.Entities;
-using Employix.Domain.Models;
+using Employix.Shared.DTOs;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using Microsoft.Extensions.Options;
