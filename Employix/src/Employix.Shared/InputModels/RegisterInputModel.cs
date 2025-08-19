@@ -10,10 +10,12 @@ namespace Employix.Domain.Models.InputModels
         public string Email { get; set; } = "";
 
         [Required]
+        [MinLength(2, ErrorMessage = "First name must be at least 2 characters.")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; } = "";
 
         [Required]
+        [MinLength(3, ErrorMessage = "Last name must be at least 3 characters.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; } = "";
 
