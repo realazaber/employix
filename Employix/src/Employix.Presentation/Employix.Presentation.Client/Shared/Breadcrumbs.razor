@@ -1,0 +1,21 @@
+﻿@using Employix.Shared.ValueObjects
+@using System.Reflection
+
+
+<div id="breadcrumb-banner">
+    <ol class="breadcrumb">
+        @foreach (Breadcrumb breadcrumb in breadcrumbs)
+        {
+            <li class="breadcrumb-item">
+                <a href="@breadcrumb.Url">
+                    @breadcrumb.Title
+                </a>
+            </li>
+        }
+    </ol>
+</div>
+
+@code {
+    [Parameter] public List<Breadcrumb> breadcrumbs { get; set; }
+    [Parameter] public bool? authenticated { get; set; } = true;
+}
