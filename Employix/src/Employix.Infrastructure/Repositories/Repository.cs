@@ -35,7 +35,7 @@ namespace Employix.Infrastructure.Repositories
 
         }
 
-        public async Task<List<T>> GetAsync(int pageNum, int pageSize)
+        public virtual async Task<List<T>> GetAsync(int pageNum, int pageSize)
         {
             return await _dbContext.Set<T>()
                 .Skip((pageNum - 1) * pageSize)
@@ -43,12 +43,12 @@ namespace Employix.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(string Id)
+        public virtual async Task<T> GetByIdAsync(string Id)
         {
             return await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id.ToString() == Id);
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             return await Task.Run(() =>
             {
