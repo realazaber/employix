@@ -7,6 +7,5 @@
         public const string UserManager = "UserManager";
         public const string TeamManager = "TeamManager";
         public const string TeamMember = "TeamMember";
-
     }
 }
