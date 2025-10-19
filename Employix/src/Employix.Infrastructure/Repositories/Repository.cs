@@ -14,6 +14,28 @@ namespace Employix.Infrastructure.Repositories
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        public virtual async Task<List<T>> GetAsync(int pageNum, int pageSize)
+        {
+            return await _dbContext.Set<T>()
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public virtual async Task<T> GetByIdAsync(string Id)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id.ToString() == Id);
+        }
+
+        public virtual async Task<int> GetCountAsync()
+        {
+            return await _dbContext.Set<T>().CountAsync();
+        }
+
+        public async Task<IQueryable<T>> GetQueryable()
+        {
+            return _dbContext.Set<T>().AsQueryable();
+        }
 
         public virtual async Task<T> AddAsync(T entity)
         {
@@ -35,19 +57,6 @@ namespace Employix.Infrastructure.Repositories
 
         }
 
-        public virtual async Task<List<T>> GetAsync(int pageNum, int pageSize)
-        {
-            return await _dbContext.Set<T>()
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
-
-        public virtual async Task<T> GetByIdAsync(string Id)
-        {
-            return await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id.ToString() == Id);
-        }
-
         public virtual async Task<T> UpdateAsync(T entity)
         {
             return await Task.Run(() =>
@@ -57,5 +66,7 @@ namespace Employix.Infrastructure.Repositories
                 return entity;
             });
         }
+
+
     }
 }
